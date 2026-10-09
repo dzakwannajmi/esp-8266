@@ -1,58 +1,58 @@
-# Setup di laptop lain
+# Setup on another laptop
 
-Panduan untuk menjalankan project ini dari nol di laptop yang belum pernah dipakai untuk Arduino/ESP8266.
+How to run this project from scratch on a laptop that has never been used for Arduino or ESP8266 development.
 
-## 1. Install software
+## 1. Install the software
 
 1. **VS Code**: https://code.visualstudio.com
-2. Di VS Code, buka Extensions (`Cmd/Ctrl+Shift+X`), cari **PlatformIO IDE**, install, lalu restart VS Code.
-   Pertama kali dibuka, PlatformIO mengunduh Python dan tool bawaannya. Tunggu sampai selesai.
-3. **Driver USB CH340** (chip USB pada NodeMCU V3):
-   - **macOS** terbaru biasanya sudah bawaan. Kalau port tidak muncul, install driver CH340 dari produsen (WCH).
-   - **Windows**: install driver CH340 (WCH). Setelah itu port muncul sebagai `COM3`, `COM4`, dst.
-   - **Linux**: tidak perlu driver. Tambahkan user ke grup `dialout`, lalu login ulang:
+2. In VS Code, open Extensions (`Cmd/Ctrl+Shift+X`), search for **PlatformIO IDE**, install it, then restart VS Code.
+   The first launch downloads Python and PlatformIO's built-in tools. Wait until it finishes.
+3. **CH340 USB driver** (the USB chip on the NodeMCU V3):
+   - **macOS**: recent versions usually include it. If the port does not appear, install the CH340 driver from the manufacturer (WCH).
+   - **Windows**: install the CH340 driver (WCH). The board then shows up as `COM3`, `COM4`, and so on.
+   - **Linux**: no driver needed. Add your user to the `dialout` group and log in again:
      `sudo usermod -aG dialout $USER`
 
-> Platform ESP8266 dan library diunduh otomatis oleh PlatformIO dari `platformio.ini`.
-> URL `package_esp8266com_index.json` milik Arduino IDE **tidak dipakai** di sini.
+> The ESP8266 platform and libraries are downloaded automatically by PlatformIO from `platformio.ini`.
+> The Arduino IDE URL (`package_esp8266com_index.json`) is **not used** here.
 
-## 2. Ambil project
+## 2. Get the project
 
-Salin folder project ini ke laptop baru (flashdisk, zip, atau `git clone` kalau sudah diunggah ke Git).
+Copy this project folder to the new laptop (USB drive, zip, or `git clone`).
 
-Folder `.pio/` tidak perlu disalin. Folder itu dibuat ulang otomatis saat build.
+You do not need to copy the `.pio/` folder. It is recreated automatically on the first build.
 
-## 3. Buat file `secrets.h`
+## 3. Create `secrets.h`
 
-File `include/secrets.h` sengaja tidak ikut Git karena berisi password WiFi. Buat dari template:
+`include/secrets.h` is intentionally not tracked by Git because it holds your WiFi password. Create it from the template:
 
 ```bash
 cp include/secrets.example.h include/secrets.h
 ```
 
-Isi `WIFI_SSID` dan `WIFI_PASSWORD` kalau mau tersambung ke WiFi rumah. Kosongkan kalau mau memakai mode Access Point. Detailnya di [wifi-web.md](wifi-web.md).
+Fill in `WIFI_SSID` and `WIFI_PASSWORD` to connect to your home WiFi, or leave them empty to use Access Point mode. Details are in [wifi-web.md](wifi-web.md).
 
-## 4. Buka project
+## 4. Open the project
 
-1. `File → Open Folder`, pilih folder project (yang berisi `platformio.ini`).
-2. Tunggu status bar bawah menampilkan ikon PlatformIO (centang, panah, colokan). Pembukaan pertama bisa 5–15 menit karena mengunduh toolchain ESP8266.
+1. `File → Open Folder` and choose the project folder (the one containing `platformio.ini`).
+2. Wait until the bottom status bar shows the PlatformIO icons (check mark, arrow, plug). The first open can take 5–15 minutes because the ESP8266 toolchain is downloaded.
 
 ## 5. Upload
 
-1. Rakit rangkaian sesuai [wiring.md](wiring.md), lalu colok NodeMCU lewat USB. **Cabut USB sebelum mengubah rangkaian.**
-2. Di status bar bawah, klik nama environment (mis. `env:web_slider`) lalu pilih contoh yang mau dicoba.
-3. Klik ikon panah (**Upload**). Kalau berhasil, terminal menampilkan `[SUCCESS]`.
-4. Klik ikon colokan (**Serial Monitor**) untuk melihat output, baud rate 115200.
+1. Build the circuit as described in [wiring.md](wiring.md), then plug the NodeMCU in over USB. **Unplug USB before changing the circuit.**
+2. In the bottom status bar, click the environment name (for example `env:web_slider`) and pick the example you want to try.
+3. Click the arrow icon (**Upload**). On success the terminal shows `[SUCCESS]`.
+4. Click the plug icon (**Serial Monitor**) to see the output, baud rate 115200.
 
-## Lewat terminal (opsional)
+## From the terminal (optional)
 
-Jalankan di folder project, memakai terminal PlatformIO (`PlatformIO: New Terminal`) atau setelah `pip install platformio`:
+Run these in the project folder, using the PlatformIO terminal (`PlatformIO: New Terminal`) or after `pip install platformio`:
 
 ```bash
-pio run -e web_slider              # build saja
+pio run -e web_slider              # build only
 pio run -e web_slider -t upload    # build + upload
-pio device list                    # cek port yang terdeteksi
+pio device list                    # list detected ports
 pio device monitor                 # serial monitor
 ```
 
-Daftar environment ada di [examples.md](examples.md).
+The list of environments is in [examples.md](examples.md).

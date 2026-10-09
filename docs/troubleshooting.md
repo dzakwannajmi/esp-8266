@@ -1,40 +1,40 @@
 # Troubleshooting
 
-## Upload dan koneksi
+## Upload and connection
 
-| Gejala | Penyebab dan solusi |
+| Symptom | Cause and fix |
 |---|---|
-| Port tidak terdeteksi / `No serial port found` | Install driver **CH340**, cabut lalu colok ulang. Coba kabel USB lain, karena banyak kabel hanya untuk charging. Cek dengan `pio device list` |
-| Gagal di `Connecting......` | Tahan tombol **FLASH** di board saat upload dimulai, lepas setelah progress jalan |
-| Teks aneh di Serial Monitor | Pastikan baud rate **115200**. Beberapa baris acak saat boot itu normal (pesan bootloader) |
-| Configuring project lama di 50% | Masih mengunduh toolchain, tunggu 5–15 menit. Cek panel **Output**. Kalau macet, jalankan `pio run` di terminal untuk melihat error |
-| Ada tanda merah di editor (`'Arduino.h' file not found`) | Noise IntelliSense. Kalau **Build** berhasil, abaikan. Biasanya hilang setelah PlatformIO selesai indexing atau setelah build sekali |
-| Environment yang di-upload tidak sesuai | Cek nama environment di status bar bawah. Tanpa `-e`, terminal memakai environment default (`web_slider`) |
+| Port not detected / `No serial port found` | Install the **CH340** driver, then unplug and replug. Try another USB cable, since many cables are charge-only. Check with `pio device list` |
+| Fails at `Connecting......` | Hold the **FLASH** button on the board when the upload starts, and release it once progress begins |
+| Garbled text in the Serial Monitor | Make sure the baud rate is **115200**. A few random characters at boot are normal (bootloader message) |
+| "Configuring project" stuck at 50% | It is still downloading the toolchain, wait 5–15 minutes. Check the **Output** panel. If it is stuck, run `pio run` in a terminal to see the error |
+| Red marks in the editor (`'Arduino.h' file not found`) | IntelliSense noise. If **Build** succeeds, ignore it. It usually goes away once PlatformIO finishes indexing or after one build |
+| The uploaded environment is not the one you wanted | Check the environment name in the bottom status bar. Without `-e`, the terminal uses the default environment (`web_slider`) |
 
-## LED
+## LEDs
 
-| Gejala | Penyebab dan solusi |
+| Symptom | Cause and fix |
 |---|---|
-| Satu LED tidak menyala | Kaki + dan − tertukar. Balik arah LED |
-| Dua-duanya mati | Cek kabel ke pin **G** (GND). Pastikan kabel dari baris katoda masuk ke rel **biru (−)** |
-| LED tidak bereaksi | Pastikan kabel sinyal ke **D1** dan **D2**, bukan SD1/SD2 |
-| Salah satu LED lebih redup | Nilai resistor berbeda (cek gelang warna), LED berbeda, atau kontak longgar. Tukar posisi LED, lalu tukar resistor, untuk mencari penyebabnya |
-| LED terlalu redup | Jangan sambung beberapa LED ke satu pin. Satu pin = satu LED = satu resistor |
+| One LED does not light up | Its + and − legs are swapped. Flip the LED around |
+| Both LEDs are off | Check the wire to the **G** (GND) pin. Make sure the wires from the cathode rows go to the **blue (−)** rail |
+| An LED does not react | Make sure the signal wires go to **D1** and **D2**, not SD1/SD2 |
+| One LED is dimmer than the other | Different resistor values (check the color bands), different LEDs, or a loose contact. Swap the LEDs, then swap the resistors, to find the cause |
+| LEDs are too dim | Do not connect several LEDs to one pin. One pin = one LED = one resistor |
 
-Gelang warna resistor: 220 Ω = merah-merah-coklat, 330 Ω = oranye-oranye-coklat, 470 Ω = kuning-ungu-coklat.
-Resistor tidak punya arah, boleh dipasang terbalik.
+Resistor color bands: 220 Ω = red-red-brown, 330 Ω = orange-orange-brown, 470 Ω = yellow-violet-brown.
+Resistors have no direction, so they can be installed either way around.
 
-## WiFi dan web
+## WiFi and web
 
-| Gejala | Penyebab dan solusi |
+| Symptom | Cause and fix |
 |---|---|
-| WiFi `ESP8266-LED` tidak muncul | Pastikan kode contoh web **sudah di-upload** (build saja tidak cukup). Tunggu 5–10 detik, lalu refresh daftar WiFi atau matikan-nyalakan WiFi |
-| Tersambung tapi halaman tidak terbuka | Matikan **data seluler** di HP. Pakai `http://`, bukan `https://`. Alamat: `http://192.168.4.1` |
-| Gagal tersambung ke WiFi rumah | Pastikan WiFi **2.4 GHz** dan SSID/password di `include/secrets.h` benar. ESP8266 otomatis pindah ke mode Access Point setelah 15 detik |
-| Build gagal: `secrets.h: No such file` | Salin `include/secrets.example.h` menjadi `include/secrets.h` |
+| WiFi `ESP8266-LED` does not appear | Make sure a web example has **been uploaded** (building alone is not enough). Wait 5–10 seconds, then refresh the WiFi list or toggle WiFi off and on |
+| Connected but the page does not open | Turn off **mobile data** on your phone. Use `http://`, not `https://`. The address is `http://192.168.4.1` |
+| Cannot connect to home WiFi | Make sure the network is **2.4 GHz** and the SSID/password in `include/secrets.h` are correct. The ESP8266 falls back to Access Point mode after 15 seconds |
+| Build fails: `secrets.h: No such file` | Copy `include/secrets.example.h` to `include/secrets.h` |
 
-## Aman untuk board
+## Staying safe for the board
 
-- Cabut USB sebelum mengubah rangkaian.
-- Pin `A0` maksimal 3.3 V.
-- Jangan memasang LED tanpa resistor.
+- Unplug USB before changing the circuit.
+- The `A0` pin accepts 3.3 V at most.
+- Never connect an LED without a resistor.

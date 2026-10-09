@@ -1,77 +1,77 @@
-# Rangkaian dan wiring
+# Circuit and wiring
 
-Semua contoh memakai dua LED. **Cabut USB sebelum memasang atau memindah kabel.**
+All examples use two LEDs. **Unplug USB before adding or moving wires.**
 
-## Komponen
+## Parts
 
 - 1 NodeMCU ESP8266, 1 breadboard
-- 2 LED, 2 resistor 220 Ω
-- Jumper male-to-female (ke NodeMCU) dan male-to-male (di breadboard)
+- 2 LEDs, 2 resistors (220 Ω)
+- Male-to-female jumpers (to the NodeMCU) and male-to-male jumpers (on the breadboard)
 
-## Cara kerja breadboard
+## How the breadboard works
 
-- Angka (1–60) adalah nomor baris. Lima lubang **a b c d e** dalam satu nomor saling terhubung. Begitu juga **f g h i j** di sisi kanan celah tengah. Sisi a–e dan f–j **tidak** terhubung.
-- Rel di tepi (garis merah **+** dan biru **−**) terhubung memanjang. Pakai rel biru sebagai GND.
-- Resistor tidak punya arah. **LED punya arah**: kaki panjang = anoda (+), kaki pendek = katoda (−). Kalau kaki sudah dipotong sama panjang, sisi **datar** di pinggiran lampu adalah katoda.
+- The numbers (1–60) are row numbers. The five holes **a b c d e** in one row are connected to each other, and so are **f g h i j** on the other side of the center gap. The a–e side and the f–j side are **not** connected.
+- The rails along the edges (red **+** and blue **−** lines) are connected along their whole length. Use the blue rail as GND.
+- Resistors have no direction. **LEDs do**: the long leg is the anode (+) and the short leg is the cathode (−). If the legs have been trimmed to the same length, the **flat** side on the rim of the LED is the cathode.
 
-## Pin yang dipakai
+## Pins used
 
-| Fungsi | Pin NodeMCU | GPIO |
+| Function | NodeMCU pin | GPIO |
 |---|---|---|
 | LED 1 | D1 | 5 |
 | LED 2 | D2 | 4 |
 | Ground | G | – |
-| Sensor LDR (opsional) | A0 | – |
+| LDR sensor (optional) | A0 | – |
 
-## Alur sinyal
+## Signal path
 
 ```
-D1 → resistor 220Ω → LED 1 (+ → −) → rel GND → pin G
-D2 → resistor 220Ω → LED 2 (+ → −) → rel GND → pin G
+D1 → 220Ω resistor → LED 1 (+ → −) → GND rail → G pin
+D2 → 220Ω resistor → LED 2 (+ → −) → GND rail → G pin
 ```
 
-Satu pin = satu LED = satu resistor. Pin ESP8266 hanya aman memberi sekitar 12 mA, jadi jangan menyambung beberapa LED ke satu pin. Jangan pasang LED tanpa resistor.
+One pin = one LED = one resistor. An ESP8266 pin can safely supply only about 12 mA, so do not connect several LEDs to one pin. Never connect an LED without a resistor.
 
-## Langkah pemasangan
+## Assembly steps
 
-Nomor baris di bawah hanya contoh. Yang penting mengikuti aturan di bagian berikutnya.
+The row numbers below are only an example. What matters is following the rules in the next section.
 
-1. Sambungkan pin **G** NodeMCU ke **rel biru (−)** dengan jumper male-to-female.
-2. **LED 1** (baris 8–13):
+1. Connect the **G** pin on the NodeMCU to the **blue rail (−)** with a male-to-female jumper.
+2. **LED 1** (rows 8–13):
 
-   | Komponen | Posisi |
+   | Part | Position |
    |---|---|
-   | Jumper dari **D1** | baris 8 (`b8`) |
-   | Resistor, kaki 1 | baris 8 (`a8`) |
-   | Resistor, kaki 2 | baris 12 (`a12`) |
-   | LED 1, kaki panjang (+) | baris 12 (`b12`) |
-   | LED 1, kaki pendek (−) | baris 13 (`b13`) |
-   | Jumper dari baris 13 (`c13`) | ke rel biru (−) |
+   | Jumper from **D1** | row 8 (`b8`) |
+   | Resistor, leg 1 | row 8 (`a8`) |
+   | Resistor, leg 2 | row 12 (`a12`) |
+   | LED 1, long leg (+) | row 12 (`b12`) |
+   | LED 1, short leg (−) | row 13 (`b13`) |
+   | Jumper from row 13 (`c13`) | to the blue rail (−) |
 
-3. **LED 2**: pola sama, geser ke baris 18–23, jumper sinyal dari **D2**.
-4. Periksa semua kaki masuk penuh dan tidak ada kaki yang bersentuhan, lalu colok USB.
+3. **LED 2**: same pattern, shifted to rows 18–23, with the signal jumper from **D2**.
+4. Check that every leg is fully inserted and no legs touch each other, then plug in USB.
 
-### Aturan posisi
+### Placement rules
 
-- Dua kaki satu komponen harus di **nomor baris yang berbeda**.
-- Kaki resistor yang ke LED dan kaki panjang LED (+) harus di **nomor baris yang sama**.
-- Set LED 1 dan LED 2 jangan berbagi nomor baris. Beri jarak 2–3 baris kosong.
-- Resistor cukup berjarak 4–6 baris. LED cukup di dua baris bersebelahan.
-- Kaki terlalu panjang: tekuk atau potong, sisakan 6–8 mm yang masuk lubang, supaya tidak menyentuh kaki lain.
+- The two legs of one component must be in **different row numbers**.
+- The resistor leg that goes to the LED and the LED's long leg (+) must be in the **same row number**.
+- LED 1 and LED 2 must not share row numbers. Leave 2–3 empty rows between them.
+- A resistor only needs to span 4–6 rows. An LED only needs two neighboring rows.
+- If a leg is too long, bend or trim it so that 6–8 mm goes into the hole and it cannot touch other legs.
 
-## Modul LDR (contoh `ldr_auto`)
+## LDR module (`ldr_auto` example)
 
-| Modul LDR | NodeMCU |
+| LDR module | NodeMCU |
 |---|---|
 | VCC | 3V3 |
 | GND | G |
 | AO | A0 |
 
-Pin `A0` hanya boleh menerima **0–3.3 V**. Jangan sambungkan ke 5 V.
+The `A0` pin only accepts **0–3.3 V**. Never connect it to 5 V.
 
-## Batasan ESP8266 yang perlu diingat
+## ESP8266 limitations to keep in mind
 
-- Hanya ada **satu pin analog** (`A0`).
-- **D3, D4, D8** (GPIO 0, 2, 15) memengaruhi proses boot. Hindari untuk LED eksternal atau relay.
-- Echo pin sensor **HC-SR04** keluar 5 V, sedangkan ESP8266 hanya toleran 3.3 V. Pakai pembagi tegangan.
-- LCD I2C memakai **D1 (SCL)** dan **D2 (SDA)**, jadi bentrok dengan pin LED di proyek ini.
+- There is only **one analog pin** (`A0`).
+- **D3, D4, D8** (GPIO 0, 2, 15) affect the boot process. Avoid them for external LEDs or relays.
+- The echo pin of an **HC-SR04** outputs 5 V, but the ESP8266 only tolerates 3.3 V. Use a voltage divider.
+- An I2C LCD uses **D1 (SCL)** and **D2 (SDA)**, which clash with the LED pins in this project.

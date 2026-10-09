@@ -1,57 +1,57 @@
 # ESP8266 LED Lab
 
-Kumpulan percobaan LED untuk NodeMCU ESP8266 memakai PlatformIO di VS Code: kedip, fade, SOS, sensor cahaya, sampai kontrol kecerahan lewat halaman web.
+A collection of LED experiments for the NodeMCU ESP8266 using PlatformIO in VS Code: blinking, fading, SOS, a light sensor, and brightness control from a web page.
 
 ## Hardware
 
-- NodeMCU ESP8266 (V3, chip USB CH340)
-- Breadboard, kabel jumper
-- 2 LED + 2 resistor 220 Ω
-- (opsional) modul LDR untuk contoh `ldr_auto`
+- NodeMCU ESP8266 (V3, CH340 USB chip)
+- Breadboard and jumper wires
+- 2 LEDs and 2 resistors (220 Ω)
+- (optional) LDR module for the `ldr_auto` example
 
-## Mulai cepat
+## Quick start
 
-1. Install **VS Code** dan extension **PlatformIO IDE**.
-2. Buka folder project ini (`File → Open Folder`), tunggu PlatformIO selesai mengunduh.
-3. Salin `include/secrets.example.h` menjadi `include/secrets.h`.
-4. Rakit rangkaian sesuai [docs/wiring.md](docs/wiring.md).
-5. Pilih environment di status bar bawah, lalu klik **Upload**.
+1. Install **VS Code** and the **PlatformIO IDE** extension.
+2. Open this project folder (`File → Open Folder`) and wait for PlatformIO to finish downloading its tools.
+3. Copy `include/secrets.example.h` to `include/secrets.h`.
+4. Build the circuit as described in [docs/wiring.md](docs/wiring.md).
+5. Pick an environment in the bottom status bar, then click **Upload**.
 
-Atau lewat terminal:
+Or from the terminal:
 
 ```bash
 pio run -e breathing_fade -t upload
 pio device monitor
 ```
 
-## Struktur
+## Project structure
 
 ```
-src/<nomor>_<nama>/main.cpp   satu folder = satu contoh
-include/secrets.example.h     template WiFi (salin ke secrets.h)
-platformio.ini                daftar environment
-docs/                         dokumentasi lengkap
+src/<number>_<name>/main.cpp   one folder = one example
+include/secrets.example.h      WiFi template (copy to secrets.h)
+platformio.ini                 list of environments
+docs/                          full documentation
 ```
 
-## Contoh yang tersedia
+## Examples
 
-| Environment | Isi |
+| Environment | What it does |
 |---|---|
-| `alternate_blink` | LED 1 dan 2 menyala bergantian |
-| `sync_blink` | Kedua LED kedip bersamaan |
-| `breathing_fade` | Terang-redup pelan seperti bernapas |
-| `swing_fade` | LED 1 makin terang, LED 2 makin redup |
-| `sos` | Sinyal SOS morse |
-| `candle` | Kecerahan acak seperti api lilin |
-| `serial_control` | Kontrol lewat Serial Monitor |
-| `ldr_auto` | Makin gelap, LED makin terang |
-| `web_slider` | Slider kecerahan lewat browser |
-| `web_effects` | Tombol efek dan slider lewat browser |
+| `alternate_blink` | LED 1 and LED 2 light up in turns |
+| `sync_blink` | Both LEDs blink together |
+| `breathing_fade` | Slow fade in and out, like breathing |
+| `swing_fade` | LED 1 gets brighter as LED 2 gets dimmer |
+| `sos` | SOS signal in Morse code |
+| `candle` | Random flickering brightness, like a candle |
+| `serial_control` | Control the LEDs from the Serial Monitor |
+| `ldr_auto` | The darker it gets, the brighter the LED |
+| `web_slider` | Brightness sliders in a browser |
+| `web_effects` | Effect buttons and a slider in a browser |
 
-## Dokumentasi
+## Documentation
 
-- [Setup di laptop lain](docs/setup.md)
-- [Rangkaian dan wiring](docs/wiring.md)
-- [Penjelasan tiap contoh](docs/examples.md)
-- [Kontrol lewat WiFi](docs/wifi-web.md)
+- [Setup on another laptop](docs/setup.md)
+- [Circuit and wiring](docs/wiring.md)
+- [Example descriptions](docs/examples.md)
+- [Control over WiFi](docs/wifi-web.md)
 - [Troubleshooting](docs/troubleshooting.md)

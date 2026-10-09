@@ -1,59 +1,59 @@
-# Penjelasan contoh
+# Example descriptions
 
-Setiap contoh ada di `src/<nomor>_<nama>/main.cpp` dan dipilih lewat environment di `platformio.ini`.
+Each example lives in `src/<number>_<name>/main.cpp` and is selected through an environment in `platformio.ini`.
 
-Pilih lewat status bar VS Code, atau:
+Pick one from the VS Code status bar, or run:
 
 ```bash
 pio run -e <environment> -t upload
 ```
 
-Semua contoh memakai **D1 (LED 1)** dan **D2 (LED 2)**, kecuali disebut lain. Wiring ada di [wiring.md](wiring.md).
+All examples use **D1 (LED 1)** and **D2 (LED 2)** unless noted otherwise. Wiring is in [wiring.md](wiring.md).
 
-| Environment | Folder | Perilaku |
+| Environment | Folder | Behavior |
 |---|---|---|
-| `alternate_blink` | `01_alternate_blink` | LED 1 dan 2 menyala bergantian tiap 0,5 detik |
-| `sync_blink` | `02_sync_blink` | Kedua LED hidup-mati bersamaan. Ubah `JEDA` untuk kecepatan |
-| `breathing_fade` | `03_breathing_fade` | Kedua LED terang-redup pelan (fade in/out) |
-| `swing_fade` | `04_swing_fade` | LED 1 makin terang saat LED 2 makin redup, lalu sebaliknya |
-| `sos` | `05_sos` | Sinyal SOS morse (`...---...`) diulang terus |
-| `candle` | `06_candle` | Kecerahan acak, tiap LED sendiri-sendiri |
-| `serial_control` | `07_serial_control` | Kontrol lewat Serial Monitor (lihat di bawah) |
-| `ldr_auto` | `08_ldr_auto` | Makin gelap, LED 1 makin terang. LED 2 menyala saat sangat gelap |
-| `web_slider` | `09_web_slider` | Slider kecerahan di halaman web ([wifi-web.md](wifi-web.md)) |
-| `web_effects` | `10_web_effects` | Tombol efek dan slider di halaman web ([wifi-web.md](wifi-web.md)) |
+| `alternate_blink` | `01_alternate_blink` | LED 1 and LED 2 light up in turns every 0.5 s |
+| `sync_blink` | `02_sync_blink` | Both LEDs turn on and off together. Change `JEDA` to set the speed |
+| `breathing_fade` | `03_breathing_fade` | Both LEDs slowly fade in and out |
+| `swing_fade` | `04_swing_fade` | LED 1 gets brighter while LED 2 gets dimmer, then the reverse |
+| `sos` | `05_sos` | SOS signal in Morse code (`...---...`), repeated |
+| `candle` | `06_candle` | Random brightness, each LED on its own |
+| `serial_control` | `07_serial_control` | Control from the Serial Monitor (see below) |
+| `ldr_auto` | `08_ldr_auto` | The darker it gets, the brighter LED 1. LED 2 turns on when it is very dark |
+| `web_slider` | `09_web_slider` | Brightness sliders on a web page ([wifi-web.md](wifi-web.md)) |
+| `web_effects` | `10_web_effects` | Effect buttons and a slider on a web page ([wifi-web.md](wifi-web.md)) |
 
-## Tentang PWM dan kecerahan
+## About PWM and brightness
 
-Di ESP8266, `analogWrite(pin, nilai)` bernilai **0 (mati) sampai 1023 (terang penuh)**. Nilai kecil membuat LED lebih sering mati sehingga tampak redup.
+On the ESP8266, `analogWrite(pin, value)` takes a value from **0 (off) to 1023 (full brightness)**. A small value keeps the LED off most of the time, so it looks dim.
 
-Mata melihat kecerahan secara tidak linear. Karena itu contoh fade dan web memakai nilai yang **dikuadratkan** (gamma) supaya perubahan terasa merata.
+The eye perceives brightness non-linearly, so the fade and web examples **square** the value (gamma correction) to make changes look even.
 
 ## `serial_control`
 
-Buka Serial Monitor (115200 baud), ketik perintah lalu tekan Enter:
+Open the Serial Monitor (115200 baud), type a command, and press Enter:
 
-| Perintah | Hasil |
+| Command | Result |
 |---|---|
-| `1 50` | LED 1 kecerahan 50% |
-| `2 100` | LED 2 kecerahan 100% |
-| `on` | Kedua LED 100% |
-| `off` | Kedua LED mati |
-| `help` | Tampilkan bantuan |
+| `1 50` | LED 1 at 50% brightness |
+| `2 100` | LED 2 at 100% brightness |
+| `on` | Both LEDs at 100% |
+| `off` | Both LEDs off |
+| `help` | Show help |
 
 ## `ldr_auto`
 
-- Sambungkan modul LDR ke `A0` ([wiring.md](wiring.md)).
-- Buka Serial Monitor untuk melihat nilai sensor.
-- Kalau LED malah menyala saat terang, ubah `GELAP_NILAI_TINGGI` menjadi `true` di `main.cpp`. Arah nilai tiap modul LDR berbeda.
-- `AMBANG_GELAP` mengatur batas gelap untuk menyalakan LED 2.
+- Connect the LDR module to `A0` ([wiring.md](wiring.md)).
+- Open the Serial Monitor to see the sensor values.
+- If the LED lights up in bright light instead, set `GELAP_NILAI_TINGGI` to `true` in `main.cpp`. The direction of the value differs between LDR modules.
+- `AMBANG_GELAP` sets the darkness threshold that turns LED 2 on.
 
-## Menambah contoh baru
+## Adding a new example
 
-1. Buat folder `src/11_nama_contoh/main.cpp`.
-2. Tambahkan environment di `platformio.ini`:
+1. Create `src/11_example_name/main.cpp`.
+2. Add an environment to `platformio.ini`:
 
    ```ini
-   [env:nama_contoh]
-   build_src_filter = -<*> +<11_nama_contoh/>
+   [env:example_name]
+   build_src_filter = -<*> +<11_example_name/>
    ```
